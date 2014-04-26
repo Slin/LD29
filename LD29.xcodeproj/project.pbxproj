@@ -1,0 +1,335 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D52BC04B190B36990016BD65 /* LDApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC04A190B36990016BD65 /* LDApplication.cpp */; };
+		D52BC04E190B36990016BD65 /* LDWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC04D190B36990016BD65 /* LDWorld.cpp */; };
+		D52BC052190B36990016BD65 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC051190B36990016BD65 /* main.cpp */; };
+		D52BC055190B36990016BD65 /* LD29-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D52BC054190B36990016BD65 /* LD29-Prefix.pch */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D52BC046190B36990016BD65 /* LD29.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LD29.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D52BC04A190B36990016BD65 /* LDApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LDApplication.cpp; path = Classes/LDApplication.cpp; sourceTree = "<group>"; };
+		D52BC04C190B36990016BD65 /* LDApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LDApplication.h; path = Classes/LDApplication.h; sourceTree = "<group>"; };
+		D52BC04D190B36990016BD65 /* LDWorld.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LDWorld.cpp; path = Classes/LDWorld.cpp; sourceTree = "<group>"; };
+		D52BC04F190B36990016BD65 /* LDWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LDWorld.h; path = Classes/LDWorld.h; sourceTree = "<group>"; };
+		D52BC051190B36990016BD65 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "Supporting files/main.cpp"; sourceTree = "<group>"; };
+		D52BC053190B36990016BD65 /* LD29-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "LD29-Info.plist"; path = "Supporting files/LD29-Info.plist"; sourceTree = "<group>"; };
+		D52BC054190B36990016BD65 /* LD29-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "LD29-Prefix.pch"; path = "Supporting files/LD29-Prefix.pch"; sourceTree = "<group>"; };
+		D52BC057190B36990016BD65 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		D52BC058190B36990016BD65 /* settings.json */ = {isa = PBXFileReference; lastKnownFileType = folder; name = settings.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D52BC042190B36990016BD65 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D52BC03C190B36990016BD65 = {
+			isa = PBXGroup;
+			children = (
+				D52BC048190B36990016BD65 /* LD29 */,
+				D52BC047190B36990016BD65 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D52BC047190B36990016BD65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D52BC046190B36990016BD65 /* LD29.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D52BC048190B36990016BD65 /* LD29 */ = {
+			isa = PBXGroup;
+			children = (
+				D52BC056190B36990016BD65 /* Resources */,
+				D52BC049190B36990016BD65 /* Classes */,
+				D52BC050190B36990016BD65 /* Supporting files */,
+			);
+			path = LD29;
+			sourceTree = "<group>";
+		};
+		D52BC049190B36990016BD65 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D52BC04A190B36990016BD65 /* LDApplication.cpp */,
+				D52BC04C190B36990016BD65 /* LDApplication.h */,
+				D52BC04D190B36990016BD65 /* LDWorld.cpp */,
+				D52BC04F190B36990016BD65 /* LDWorld.h */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		D52BC050190B36990016BD65 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				D52BC051190B36990016BD65 /* main.cpp */,
+				D52BC053190B36990016BD65 /* LD29-Info.plist */,
+				D52BC054190B36990016BD65 /* LD29-Prefix.pch */,
+			);
+			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		D52BC056190B36990016BD65 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D52BC057190B36990016BD65 /* manifest.json */,
+				D52BC058190B36990016BD65 /* settings.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D52BC043190B36990016BD65 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D52BC055190B36990016BD65 /* LD29-Prefix.pch in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D52BC045190B36990016BD65 /* LD29 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D52BC05B190B36990016BD65 /* Build configuration list for PBXNativeTarget "LD29" */;
+			buildPhases = (
+				D52BC041190B36990016BD65 /* Sources */,
+				D52BC042190B36990016BD65 /* Frameworks */,
+				D52BC043190B36990016BD65 /* Headers */,
+				D52BC044190B36990016BD65 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LD29;
+			productName = LD29;
+			productReference = D52BC046190B36990016BD65 /* LD29.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D52BC03D190B36990016BD65 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = LD;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Überpixel";
+			};
+			buildConfigurationList = D52BC040190B36990016BD65 /* Build configuration list for PBXProject "LD29" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D52BC03C190B36990016BD65;
+			productRefGroup = D52BC047190B36990016BD65 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D52BC045190B36990016BD65 /* LD29 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D52BC044190B36990016BD65 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "OUTPUT_DIR=\"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/\"\nRESOURCES_DIR=\"$PROJECT_DIR/$TARGET_NAME/Resources/\"\n\nrsync -avz \"$RESOURCES_DIR\" \"$OUTPUT_DIR\"\n\t\t\t\t\t";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D52BC041190B36990016BD65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D52BC04E190B36990016BD65 /* LDWorld.cpp in Sources */,
+				D52BC04B190B36990016BD65 /* LDApplication.cpp in Sources */,
+				D52BC052190B36990016BD65 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D52BC059190B36990016BD65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D52BC05A190B36990016BD65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D52BC05C190B36990016BD65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LD29/Supporting files/LD29-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/include/rayne/,
+					"\"$(SRCROOT)/LD29/Resources/Modules/Bullet/include\"",
+				);
+				INFOPLIST_FILE = "LD29/Supporting files/LD29-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/lib/,
+					"\"$(SRCROOT)/LD29/Resources/Modules/Bullet\"",
+					"$(PROJECT_DIR)/LD29/Resources/Modules/Bullet",
+				);
+				OTHER_LDFLAGS = (
+					"-lRayne",
+					"-lrayne-bullet",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D52BC05D190B36990016BD65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LD29/Supporting files/LD29-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"NDEBUG=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/include/rayne/,
+					"\"$(SRCROOT)/LD29/Resources/Modules/Bullet/include\"",
+				);
+				INFOPLIST_FILE = "LD29/Supporting files/LD29-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/lib/,
+					"\"$(SRCROOT)/LD29/Resources/Modules/Bullet\"",
+					"$(PROJECT_DIR)/LD29/Resources/Modules/Bullet",
+				);
+				OTHER_LDFLAGS = (
+					"-lRayne",
+					"-lrayne-bullet",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D52BC040190B36990016BD65 /* Build configuration list for PBXProject "LD29" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D52BC059190B36990016BD65 /* Debug */,
+				D52BC05A190B36990016BD65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D52BC05B190B36990016BD65 /* Build configuration list for PBXNativeTarget "LD29" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D52BC05C190B36990016BD65 /* Debug */,
+				D52BC05D190B36990016BD65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D52BC03D190B36990016BD65 /* Project object */;
+}
