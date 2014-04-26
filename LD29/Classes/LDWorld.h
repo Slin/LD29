@@ -11,6 +11,8 @@
 
 #include <Rayne/Rayne.h>
 #include "RBPhysicsWorld.h"
+#include "RBRigidBody.h"
+#include "LDPlayer.h"
 
 namespace LD
 {
@@ -27,7 +29,10 @@ namespace LD
 		void HandleInputEvent(RN::Event *event);
 		
 		RN::bullet::PhysicsWorld *_physicsWorld;
+		
 		RN::Camera *_camera;
+		RN::Light *_sun;
+		Player *_player;
 	};
 }
 

@@ -11,6 +11,8 @@
 		D52BC04E190B36990016BD65 /* LDWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC04D190B36990016BD65 /* LDWorld.cpp */; };
 		D52BC052190B36990016BD65 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC051190B36990016BD65 /* main.cpp */; };
 		D52BC055190B36990016BD65 /* LD29-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D52BC054190B36990016BD65 /* LD29-Prefix.pch */; };
+		D52BC065190BD45B0016BD65 /* LDPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC063190BD45B0016BD65 /* LDPlayer.cpp */; };
+		D52BC066190BD45B0016BD65 /* LDPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D52BC064190BD45B0016BD65 /* LDPlayer.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		D52BC054190B36990016BD65 /* LD29-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "LD29-Prefix.pch"; path = "Supporting files/LD29-Prefix.pch"; sourceTree = "<group>"; };
 		D52BC057190B36990016BD65 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		D52BC058190B36990016BD65 /* settings.json */ = {isa = PBXFileReference; lastKnownFileType = folder; name = settings.json; sourceTree = "<group>"; };
+		D52BC063190BD45B0016BD65 /* LDPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LDPlayer.cpp; path = Classes/LDPlayer.cpp; sourceTree = "<group>"; };
+		D52BC064190BD45B0016BD65 /* LDPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LDPlayer.h; path = Classes/LDPlayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,8 @@
 				D52BC04C190B36990016BD65 /* LDApplication.h */,
 				D52BC04D190B36990016BD65 /* LDWorld.cpp */,
 				D52BC04F190B36990016BD65 /* LDWorld.h */,
+				D52BC063190BD45B0016BD65 /* LDPlayer.cpp */,
+				D52BC064190BD45B0016BD65 /* LDPlayer.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -101,6 +107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D52BC055190B36990016BD65 /* LD29-Prefix.pch in Headers */,
+				D52BC066190BD45B0016BD65 /* LDPlayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,6 +182,7 @@
 			files = (
 				D52BC04E190B36990016BD65 /* LDWorld.cpp in Sources */,
 				D52BC04B190B36990016BD65 /* LDApplication.cpp in Sources */,
+				D52BC065190BD45B0016BD65 /* LDPlayer.cpp in Sources */,
 				D52BC052190B36990016BD65 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
