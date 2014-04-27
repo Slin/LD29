@@ -42,7 +42,7 @@ namespace LD
 		if(GetWorldPosition().y < 0.0f)
 		{
 			_body->SetDamping(0.2f, 0.1f);
-			_body->SetGravity(RN::Vector3(-1.0f, -0.3f, 0.0f));
+			_body->SetGravity(RN::Vector3(-0.8f, -0.3f, 0.0f));
 			
 			if(_isIntro)
 			{
@@ -59,7 +59,7 @@ namespace LD
 			}
 		}
 		
-		if(!_didCount && GetWorldPosition().x < -270.0f)
+		if(!_didCount && GetWorldPosition().x < -290.0f)
 		{
 			static_cast<World*>(RN::World::GetActiveWorld())->MakeDirty();
 			_didCount = true;

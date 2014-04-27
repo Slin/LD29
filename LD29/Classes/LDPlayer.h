@@ -28,7 +28,14 @@ namespace LD
 		RN::bullet::KinematicController *_controller;
 		RN::Camera *_camera;
 		
+		RN::GenericParticleEmitter *_forwardEmitter;
+		RN::GenericParticleEmitter *_leftEmitter;
+		RN::GenericParticleEmitter *_rightEmitter;
+		RN::GenericParticleEmitter *_upEmitter;
+		RN::GenericParticleEmitter *_downEmitter;
+		
 		RN::Vector3 _speed;
+		RN::Vector3 _rotationSpeed;
 		float _turboCooldown;
 		
 		float _smoothDelta;

@@ -11,7 +11,7 @@
 namespace LD
 {
 	World::World() :
-		RN::World("OctreeSceneManager"),
+		RN::World("GenericSceneManager"),
 		_player(nullptr),
 		_dirtCounter(0),
 		_time(0.0f),
@@ -115,7 +115,12 @@ namespace LD
 		RN::Renderer::GetSharedInstance()->SetHDRWhitePoint(5.0f);
 		
 		_sun = new RN::Light(RN::Light::Type::DirectionalLight);
-		_sun->ActivateShadows(RN::ShadowParameter(_camera, 2048));
+		RN::ShadowParameter shadowParam(_camera, 2048);
+		shadowParam.distanceBlendFactor = 0.01f;
+		shadowParam.splits[1].updateInterval = 1;
+		shadowParam.splits[2].updateInterval = 1;
+		shadowParam.splits[3].updateInterval = 1;
+		_sun->ActivateShadows(shadowParam);
 		_sun->SetRotation(RN::Vector3(45.0f, -60.0f, 0.0f));
 		
 		// Create static level objects
@@ -132,7 +137,7 @@ namespace LD
 		ground->AddAttachment(body);
 		body->Release();
 		
-		_water = new RN::Water(_camera, RN::Texture::WithFile("Textures/waterbump.png", true), _refractCamera->GetStorage()->GetRenderTarget());
+		_water = new RN::Water(_camera, RN::Texture::WithFile("Textures_/waterbump.png", true), _refractCamera->GetStorage()->GetRenderTarget());
 		_water->SetWorldPosition(RN::Vector3(0.0f, 0.0f, 0.0f));
 		_water->SetScale(RN::Vector3(30.0f));
 		_water->SetFlags(_water->GetFlags() | RN::SceneNode::Flags::NoSave);
@@ -195,7 +200,14 @@ namespace LD
 		
 		for(int i = 0; i < 500; i++)
 		{
-			RN::Vector3 pos(random.RandomFloatRange(-300.0f, -500.0f), 2.0f, random.RandomFloatRange(-500.0f, 300.0f));
+			RN::Vector3 pos(random.RandomFloatRange(-300.0f, -500.0f), 10.0f, random.RandomFloatRange(-500.0f, 300.0f));
+			
+			RN::Hit hit = _physicsWorld->CastRay(pos, RN::Vector3(pos.x, -500.0f, pos.z));
+			if(hit.distance <= 0.0f || hit.position.y < 0.0f)
+				continue;
+			
+			pos = hit.position;
+			
 			RN::Entity *entity = new RN::Entity(RN::Model::WithFile("Models/Tree/Tree.sgm"), pos);
 			entity->SetFlags(entity->GetFlags() | RN::SceneNode::Flags::Static | RN::SceneNode::Flags::NoSave);
 			entity->SetScale(RN::Vector3(random.RandomFloatRange(0.89f, 1.12f)));
@@ -220,6 +232,34 @@ namespace LD
 			entity->SetFlags(entity->GetFlags() | RN::SceneNode::Flags::Static | RN::SceneNode::Flags::NoSave);
 			entity->SetScale(RN::Vector3(1.2f));
 			houseNode->AddChild(entity);
+			entity->Release();
+		}
+		
+		RN::InstancingNode *algaeNode = new RN::InstancingNode();
+		RN::Model *algaeModels[2];
+		algaeModels[0] = RN::Model::WithFile("Models/Algae/Algae.sgm");
+		algaeModels[1] = RN::Model::WithFile("Models/Stone/Stone.sgm");
+		algaeModels[0]->GetMaterialAtIndex(0, 0)->SetCullMode(RN::Material::CullMode::None);
+		algaeNode->SetModels(RN::Array::WithObjects(algaeModels[0], algaeModels[1], nullptr));
+		algaeNode->SetPivot(_camera);
+		algaeNode->SetFlags(algaeNode->GetFlags() | RN::SceneNode::Flags::NoSave);
+		algaeNode->Autorelease();
+		
+		for(int i = 0; i < 1000; i++)
+		{
+			RN::Vector3 pos(random.RandomFloatRange(-100.0f, -250.0f), 2.0f, random.RandomFloatRange(-500.0f, 500.0f));
+			
+			RN::Hit hit = _physicsWorld->CastRay(pos, RN::Vector3(pos.x, -500.0f, pos.z));
+			if(hit.distance <= 10.0f)
+				continue;
+			
+			pos = hit.position;
+			
+			RN::Entity *entity = new RN::Entity(algaeModels[random.RandomInt32Range(0, 2)], pos);
+			entity->SetFlags(entity->GetFlags() | RN::SceneNode::Flags::Static | RN::SceneNode::Flags::NoSave);
+			entity->SetScale(RN::Vector3(random.RandomFloatRange(0.89f, 1.12f)));
+			entity->SetRotation(RN::Vector3(random.RandomFloatRange(0.0f, 360.0f), 0.0f, 0.0f));
+			algaeNode->AddChild(entity);
 			entity->Release();
 		}
 		
@@ -294,6 +334,10 @@ namespace LD
 			_isRunning = true;
 			_isIntro = false;
 			
+			RN::ShadowParameter shadowParam = _sun->GetShadowParameters();
+			shadowParam.distanceBlendFactor = 0.0001f;
+			_sun->UpdateShadowParameters(shadowParam);
+			
 			RN::Kernel::GetSharedInstance()->ScheduleFunction([&](){
 				_startWidget->Close();
 				_clockWidget->Open();
@@ -365,7 +409,7 @@ namespace LD
 			_loseWidget->Open();
 			_isRunning = false;
 			
-			RN::Timer::ScheduledTimerWithDuration(std::chrono::milliseconds(5000), [&]() {
+			RN::Timer::ScheduledTimerWithDuration(std::chrono::milliseconds(3000), [&]() {
 				_loseWidget->Close();
 				_dirtCounter = 0;
 				RN::World::GetActiveWorld()->DropSceneNodes();

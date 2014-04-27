@@ -18,7 +18,7 @@ namespace LD
 	
 	void Application::Start()
 	{
-		SetTitle("LD29");
+		SetTitle("Adventures of a Little Cleaning Robot");
 
 		RN::Kernel::GetSharedInstance()->SetMaxFPS(35);
 		
