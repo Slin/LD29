@@ -13,6 +13,10 @@
 		D52BC055190B36990016BD65 /* LD29-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D52BC054190B36990016BD65 /* LD29-Prefix.pch */; };
 		D52BC065190BD45B0016BD65 /* LDPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC063190BD45B0016BD65 /* LDPlayer.cpp */; };
 		D52BC066190BD45B0016BD65 /* LDPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D52BC064190BD45B0016BD65 /* LDPlayer.h */; };
+		D52BC069190C6B5E0016BD65 /* LDDirt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC067190C6B5E0016BD65 /* LDDirt.cpp */; };
+		D52BC06A190C6B5E0016BD65 /* LDDirt.h in Headers */ = {isa = PBXBuildFile; fileRef = D52BC068190C6B5E0016BD65 /* LDDirt.h */; };
+		D52BC06D190C6EC70016BD65 /* LDSpawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D52BC06B190C6EC70016BD65 /* LDSpawner.cpp */; };
+		D52BC06E190C6EC70016BD65 /* LDSpawner.h in Headers */ = {isa = PBXBuildFile; fileRef = D52BC06C190C6EC70016BD65 /* LDSpawner.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		D52BC058190B36990016BD65 /* settings.json */ = {isa = PBXFileReference; lastKnownFileType = folder; name = settings.json; sourceTree = "<group>"; };
 		D52BC063190BD45B0016BD65 /* LDPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LDPlayer.cpp; path = Classes/LDPlayer.cpp; sourceTree = "<group>"; };
 		D52BC064190BD45B0016BD65 /* LDPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LDPlayer.h; path = Classes/LDPlayer.h; sourceTree = "<group>"; };
+		D52BC067190C6B5E0016BD65 /* LDDirt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LDDirt.cpp; path = Classes/LDDirt.cpp; sourceTree = "<group>"; };
+		D52BC068190C6B5E0016BD65 /* LDDirt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LDDirt.h; path = Classes/LDDirt.h; sourceTree = "<group>"; };
+		D52BC06B190C6EC70016BD65 /* LDSpawner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LDSpawner.cpp; path = Classes/LDSpawner.cpp; sourceTree = "<group>"; };
+		D52BC06C190C6EC70016BD65 /* LDSpawner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LDSpawner.h; path = Classes/LDSpawner.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +84,10 @@
 				D52BC04F190B36990016BD65 /* LDWorld.h */,
 				D52BC063190BD45B0016BD65 /* LDPlayer.cpp */,
 				D52BC064190BD45B0016BD65 /* LDPlayer.h */,
+				D52BC067190C6B5E0016BD65 /* LDDirt.cpp */,
+				D52BC068190C6B5E0016BD65 /* LDDirt.h */,
+				D52BC06B190C6EC70016BD65 /* LDSpawner.cpp */,
+				D52BC06C190C6EC70016BD65 /* LDSpawner.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -107,7 +119,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D52BC055190B36990016BD65 /* LD29-Prefix.pch in Headers */,
+				D52BC06E190C6EC70016BD65 /* LDSpawner.h in Headers */,
 				D52BC066190BD45B0016BD65 /* LDPlayer.h in Headers */,
+				D52BC06A190C6B5E0016BD65 /* LDDirt.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,7 +196,9 @@
 			files = (
 				D52BC04E190B36990016BD65 /* LDWorld.cpp in Sources */,
 				D52BC04B190B36990016BD65 /* LDApplication.cpp in Sources */,
+				D52BC069190C6B5E0016BD65 /* LDDirt.cpp in Sources */,
 				D52BC065190BD45B0016BD65 /* LDPlayer.cpp in Sources */,
+				D52BC06D190C6EC70016BD65 /* LDSpawner.cpp in Sources */,
 				D52BC052190B36990016BD65 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

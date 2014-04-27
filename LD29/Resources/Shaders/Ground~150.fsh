@@ -77,7 +77,10 @@ void main()
 		vec4 water = texture(mTexture3, vertTexcoord1);
 
 		color0 =  mix(clean, dirty, mask);
-		color0 = mix(color0, water, max(min(-vertPosition.y/5.0, 1.0), 0.0));
+
+		#if defined(INTERNAL_NEEDS_POSITION_WORLD)
+			color0 = mix(color0, water, max(min(-vertPosition.y/5.0, 1.0), 0.0));
+		#endif
 	#endif
 
 	color0 *= diffuse;

@@ -13,6 +13,7 @@
 #include "RBPhysicsWorld.h"
 #include "RBRigidBody.h"
 #include "LDPlayer.h"
+#include "LDSpawner.h"
 
 namespace LD
 {
@@ -31,6 +32,11 @@ namespace LD
 		RN::bullet::PhysicsWorld *_physicsWorld;
 		
 		RN::Camera *_camera;
+		RN::Camera *_refractCamera;
+		RN::Camera *_waterCamera;
+		
+		RN::Water *_water;
+		
 		RN::Light *_sun;
 		Player *_player;
 	};

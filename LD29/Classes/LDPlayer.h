@@ -10,21 +10,28 @@
 #define __LD29__LDPlayer__
 
 #include <Rayne/Rayne.h>
-#include "RBRigidBody.h"
+#include "RBKinematicController.h"
+#include "RBPhysicsWorld.h"
 
 namespace LD
 {
 	class Player : public RN::Entity
 	{
 	public:
-		Player();
+		Player(RN::Camera *camera);
 		~Player();
 		
 		void Update(float delta) override;
 		
 	private:
 		RN::Skeleton *_skeleton;
-		RN::bullet::RigidBody *_body;
+		RN::bullet::KinematicController *_controller;
+		RN::Camera *_camera;
+		
+		RN::Vector3 _speed;
+		float _turboCooldown;
+		
+		RNDeclareMeta(Player);
 	};
 }
 
