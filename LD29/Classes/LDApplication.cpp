@@ -20,8 +20,14 @@ namespace LD
 	{
 		SetTitle("LD29");
 
+		RN::Kernel::GetSharedInstance()->SetMaxFPS(35);
+		
 		RN::World *world = new World();
 		RN::WorldCoordinator::GetSharedInstance()->LoadWorld(world->Autorelease());
+		
+		/*RN::UI::Widget *widget = new RN::UI::DebugWidget();
+		widget->Open();
+		widget->Release();*/
 	}
 	
 	void Application::WillExit()

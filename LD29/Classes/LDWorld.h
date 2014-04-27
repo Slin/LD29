@@ -26,8 +26,13 @@ namespace LD
 		void LoadOnThread(RN::Thread *thread, RN::Deserializer *deserializer) override;
 		void Update(float delta) override;
 		
+		void MakeDirty();
+		bool IsRunning() const { return _isRunning; }
+		
 	private:
 		void HandleInputEvent(RN::Event *event);
+		
+		int _dirtCounter;
 		
 		RN::bullet::PhysicsWorld *_physicsWorld;
 		
@@ -35,7 +40,17 @@ namespace LD
 		RN::Camera *_refractCamera;
 		RN::Camera *_waterCamera;
 		
+		float _time;
+		bool _isRunning;
+		bool _isIntro;
+		
 		RN::Water *_water;
+		
+		RN::UI::Widget *_clockWidget;
+		RN::UI::Label *_clockLabel;
+		
+		RN::UI::Widget *_loseWidget;
+		RN::UI::Widget *_startWidget;
 		
 		RN::Light *_sun;
 		Player *_player;

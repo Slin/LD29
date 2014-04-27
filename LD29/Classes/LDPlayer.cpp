@@ -7,12 +7,14 @@
 //
 
 #include "LDPlayer.h"
+#include "LDWorld.h"
 
 namespace LD
 {
 	RNDefineMeta(Player, RN::Entity)
 	
-	Player::Player(RN::Camera *camera)
+	Player::Player(RN::Camera *camera) :
+	_smoothDelta(0.016f)
 	{
 		_camera = camera->Retain();
 		
@@ -23,6 +25,7 @@ namespace LD
 		{
 			model->GetMaterialAtIndex(0, i)->Define("RN_SPECULARITY");
 			model->GetMaterialAtIndex(0, i)->SetSpecularColor(RN::Color(0.5f, 0.5f, 0.5f, 120.0f));
+			model->GetMaterialAtIndex(0, i)->SetAmbientColor(RN::Color::Black());
 		}
 		
 		SetModel(model);
@@ -30,7 +33,9 @@ namespace LD
 		_skeleton->Retain();
 		_skeleton->SetAnimation("eat");
 		
-		RN::bullet::Shape *shape = RN::bullet::SphereShape::WithRadius(0.2f);
+		SetScale(RN::Vector3(3.0f));
+		
+		RN::bullet::Shape *shape = RN::bullet::SphereShape::WithRadius(0.3f);
 		_controller = new RN::bullet::KinematicController(shape, 0.025f);
 		_controller->SetJumpSpeed(0.0f);
 		
@@ -46,7 +51,12 @@ namespace LD
 	
 	void Player::Update(float delta)
 	{
+		if(!static_cast<World*>(RN::World::GetActiveWorld())->IsRunning())
+			return;
+		
 		Entity::Update(delta);
+		
+		_smoothDelta = _smoothDelta * 0.9f + delta * 0.1f;
 		
 		_skeleton->Update(delta*24.0f);
 		
@@ -66,15 +76,15 @@ namespace LD
 		
 		RN::Vector3 rotationX(input->IsKeyPressed('a')-input->IsKeyPressed('d'), 0.0f, 0.0f);
 		RN::Vector3 rotationY(0.0f, input->IsKeyPressed('s')-input->IsKeyPressed('w'), 0.0f);
-		Rotate((rotationX+rotationY) * 50.0f * delta);
+		Rotate((rotationX+rotationY) * 50.0f * _smoothDelta);
 		
-		_speed *= 1.0f - delta;
+		_speed *= 1.0f - _smoothDelta;
 		
 		if(GetWorldPosition().y < 0.0f)
 		{
 			_controller->SetGravity(0.0f);
 			
-			_speed += GetForward() * accelerate * delta;
+			_speed += GetForward() * accelerate * _smoothDelta;
 			
 			float currentMaxSpeed = 0.1f * std::max((_turboCooldown-2.0f)*0.75f, 1.0f);
 			if(_speed.GetLength() > currentMaxSpeed)
@@ -91,11 +101,11 @@ namespace LD
 		_controller->SetWalkDirection(_speed);
 		
 		
-		RN::Vector3 cameraTarget = GetWorldPosition() - GetForward() * 0.125f + GetUp() * 0.075f;
+		RN::Vector3 cameraTarget = GetWorldPosition() - GetForward() * 0.3f + GetUp() * 0.2f;
 		RN::Vector3 targetDirection = cameraTarget - _camera->GetWorldPosition();
-		_camera->Translate(targetDirection);//std::max(std::min(delta * 10.0f, 0.5f), 0.0f));
+		_camera->Translate(targetDirection * std::max(std::min(_smoothDelta * 10.0f, 1.0f), 0.0f));
 		
-		_camera->SetWorldRotation(RN::Quaternion::WithLookAt(_camera->GetWorldPosition() - GetWorldPosition() - GetUp() * 0.05f, GetUp()));
+		_camera->SetWorldRotation(RN::Quaternion::WithLookAt(_camera->GetWorldPosition() - GetWorldPosition() - GetUp() * 0.1f, GetUp()));
 		//_camera->Rotate(RN::Vector3(0.0f, 15.0f, 0.0f));
 	}
 }

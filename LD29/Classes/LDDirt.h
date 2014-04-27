@@ -29,6 +29,9 @@ namespace LD
 		RN::bullet::RigidBody *_body;
 		Player *_player;
 		
+		bool _didCount;
+		bool _isIntro;
+		
 		RNDeclareMeta(Dirt)
 	};
 }

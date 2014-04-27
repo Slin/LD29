@@ -31,6 +31,8 @@ namespace LD
 		RN::Vector3 _speed;
 		float _turboCooldown;
 		
+		float _smoothDelta;
+		
 		RNDeclareMeta(Player);
 	};
 }

@@ -12,7 +12,12 @@ namespace LD
 {
 	World::World() :
 		RN::World("OctreeSceneManager"),
-		_player(nullptr)
+		_player(nullptr),
+		_dirtCounter(0),
+		_time(0.0f),
+		_isIntro(true),
+		_isRunning(false),
+		_clockWidget(nullptr)
 	{
 		RN::MessageCenter::GetSharedInstance()->AddObserver(kRNInputEventMessage, [&](RN::Message *message) {
 			
@@ -22,12 +27,15 @@ namespace LD
 		}, this);
 		
 		_physicsWorld = new RN::bullet::PhysicsWorld();
-		
 		AddAttachment(_physicsWorld);
 	}
 	
 	World::~World()
 	{
+		_clockLabel->Release();
+		_clockWidget->Release();
+		_loseWidget->Release();
+		_startWidget->Release();
 		_player->Release();
 		_camera->Release();
 		_water->Release();
@@ -77,7 +85,7 @@ namespace LD
 		_camera->SceneNode::SetFlags(_camera->SceneNode::GetFlags() | RN::SceneNode::Flags::NoSave);
 		_camera->SetSky(sky);
 		_camera->SetClipFar(10000.0f);
-		_camera->SetClipNear(0.01f);
+		_camera->SetClipNear(0.1f);
 		_camera->SetFogFar(1500.0f);
 		_camera->SetFogNear(0.0f);
 		
@@ -99,7 +107,6 @@ namespace LD
 		_waterCamera->SetClipNear(_camera->GetClipNear());
 		_waterCamera->SetFogFar(_camera->GetFogFar());
 		_waterCamera->SetFogNear(_camera->GetFogNear());
-		
 		_waterCamera->SetBlitShader(RN::Shader::WithFile("shader/rn_DrawFramebufferTonemap"));
 		_waterCamera->SetPriority(-100);
 		_camera->AddChild(_waterCamera);
@@ -127,12 +134,94 @@ namespace LD
 		
 		_water = new RN::Water(_camera, RN::Texture::WithFile("Textures/waterbump.png", true), _refractCamera->GetStorage()->GetRenderTarget());
 		_water->SetWorldPosition(RN::Vector3(0.0f, 0.0f, 0.0f));
-		_water->SetScale(RN::Vector3(50.0f));
+		_water->SetScale(RN::Vector3(30.0f));
 		_water->SetFlags(_water->GetFlags() | RN::SceneNode::Flags::NoSave);
 	
 		RN::Entity *factory = new RN::Entity(RN::Model::WithFile("Models/Factory/Factory.sgm"));
 		factory->SetPosition(RN::Vector3(0.0f, 2.0f, 0.0f));
 		factory->Release();
+		
+		factory = new RN::Entity(RN::Model::WithFile("Models/Factory/FactoryThingy.sgm"));
+		factory->SetPosition(RN::Vector3(0.0f, 2.0f, 0.0f));
+		factory->Release();
+		
+		factory = new RN::Entity(RN::Model::WithFile("Models/Robot/Robot.sgm"));
+		factory->SetPosition(RN::Vector3(21.0f, 17.0f, 12.0f));
+		factory->SetRotation(RN::Vector3(-45.0f, 0.0f, 0.0f));
+		factory->SetScale(RN::Vector3(350.0f));
+		factory->GetSkeleton()->SetAnimation("eat");
+		factory->SetAction([](RN::SceneNode *ent, float delta){
+			ent->Downcast<RN::Entity>()->GetSkeleton()->Update(delta * 24.0f);
+		});
+		factory->Release();
+		
+		//Create smoke particles
+		RN::GenericParticleEmitter *emitter = new RN::GenericParticleEmitter();
+		emitter->SetSpawnRate(0.5f);
+		emitter->SetStartColor(RN::Color(3.0f, 3.0f, 3.0f, 1.0f));
+		emitter->SetEndColor(RN::Color(3.0f, 3.0f, 3.0f, 0.0f));
+		emitter->SetEndSize(RN::Vector2(5.0f, 10.0f));
+		emitter->SetLifeSpan(RN::Vector2(10.0f, 15.0f));
+		emitter->SetGravity(RN::Vector3());
+		emitter->SetVelocity(RN::Vector3(0.0f, 1.0f, 0.0f));
+		emitter->SetVelocityRandomizeMax(RN::Vector3(0.5f, 0.5f, 0.5f));
+		emitter->SetVelocityRandomizeMin(RN::Vector3(-0.5f, 0.0f, -0.5f));
+		emitter->SetPosition(RN::Vector3(-6.0f, 48.0f, 8.5f));
+		
+		RN::GenericParticleEmitter *otherEmitter = new RN::GenericParticleEmitter(emitter);
+		otherEmitter->SetPosition(RN::Vector3(-6.0f, 48.0f, -19.5f));
+		otherEmitter->Release();
+		
+		otherEmitter = new RN::GenericParticleEmitter(emitter);
+		otherEmitter->SetPosition(RN::Vector3(-6.0f, 48.0f, -44.5f));
+		otherEmitter->Release();
+		
+		otherEmitter = new RN::GenericParticleEmitter(emitter);
+		otherEmitter->SetMaxParticles(50);
+		otherEmitter->SetPosition(RN::Vector3(-6.0f, 48.0f, -65.0f));
+		otherEmitter->Release();
+		
+		emitter->Release();
+		
+		//Create houses and trees
+		RN::Random::MersenneTwister random;
+		random.Seed(0x1024);
+		
+		RN::InstancingNode *treeNode = new RN::InstancingNode();
+		treeNode->SetModels(RN::Array::WithObjects(RN::Model::WithFile("Models/Tree/Tree.sgm"), nullptr));
+		treeNode->SetPivot(_camera);
+		treeNode->SetFlags(treeNode->GetFlags() | RN::SceneNode::Flags::NoSave);
+		treeNode->Autorelease();
+		
+		for(int i = 0; i < 500; i++)
+		{
+			RN::Vector3 pos(random.RandomFloatRange(-300.0f, -500.0f), 2.0f, random.RandomFloatRange(-500.0f, 300.0f));
+			RN::Entity *entity = new RN::Entity(RN::Model::WithFile("Models/Tree/Tree.sgm"), pos);
+			entity->SetFlags(entity->GetFlags() | RN::SceneNode::Flags::Static | RN::SceneNode::Flags::NoSave);
+			entity->SetScale(RN::Vector3(random.RandomFloatRange(0.89f, 1.12f)));
+			treeNode->AddChild(entity);
+			entity->Release();
+		}
+		
+		RN::InstancingNode *houseNode = new RN::InstancingNode();
+		houseNode->SetModels(RN::Array::WithObjects(RN::Model::WithFile("Models/House/House.sgm"), nullptr));
+		houseNode->SetPivot(_camera);
+		houseNode->SetFlags(houseNode->GetFlags() | RN::SceneNode::Flags::NoSave);
+		houseNode->Autorelease();
+		
+		for(int i = 0; i < 500; i++)
+		{
+			RN::Vector3 pos(random.RandomFloatRange(0.0f, 500.0f), 2.0f, random.RandomFloatRange(-500.0f, 500.0f));
+			
+			if(pos.GetLength() < 200.0f)
+				continue;
+			
+			RN::Entity *entity = new RN::Entity(RN::Model::WithFile("Models/House/House.sgm"), pos);
+			entity->SetFlags(entity->GetFlags() | RN::SceneNode::Flags::Static | RN::SceneNode::Flags::NoSave);
+			entity->SetScale(RN::Vector3(1.2f));
+			houseNode->AddChild(entity);
+			entity->Release();
+		}
 		
 		//Create spawner
 		Spawner *spawner = new Spawner();
@@ -141,18 +230,91 @@ namespace LD
 		
 		//Create player
 		_player = new Player(_camera);
-		_player->SetPosition(RN::Vector3(-100.0f, 0.0f, 0.0f));
+		_player->SetPosition(RN::Vector3(-100.0f, -10.0f, 0.0f));
+		_camera->SetPosition(_player->GetWorldPosition());
 		spawner->SetPlayer(_player);
+		
+		//Create UI
+		RN::Kernel::GetSharedInstance()->ScheduleFunction([&](){
+			if(!_clockWidget)
+			{
+				_clockWidget = new RN::UI::Widget(RN::UI::Widget::Style::Borderless, RN::Rect(10.0f, 50.0f, 180.0f, 100.0f));
+				_clockLabel = new RN::UI::Label();
+				_clockLabel->SetAutoresizingMask(RN::UI::View::AutoresizingMask::FlexibleHeight | RN::UI::View::AutoresizingMask::FlexibleWidth);
+				_clockLabel->SetNumberOfLines(1);
+				_clockLabel->SetFrame(RN::Rect(0.0f, 0.0f, _clockWidget->GetFrame().Size().x, _clockWidget->GetFrame().Size().y).Inset(5.0f, 5.0f));
+				_clockWidget->GetContentView()->AddSubview(_clockLabel);
+				
+				_loseWidget = new RN::UI::Widget(RN::UI::Widget::Style::Borderless, RN::Rect(0.0f, 0.0f, 512, 512));
+				 _loseWidget->Center();
+				 RN::UI::Label *label = new RN::UI::Label();
+				 label->SetText(RNSTR("The factory won!"));
+				 label->SetFrame(_clockWidget->GetContentView()->GetBounds());
+				 label->SetAlignment(RN::UI::TextAlignment::Center);
+				 label->SetTextColor(RN::Color::Yellow());
+				 RN::UI::FontDescriptor fontDescriptor;
+				 fontDescriptor.style = RN::UI::FontDescriptor::FontStyleBold;
+				 RN::UI::Font *font = RN::UI::Font::WithNameAndDescriptor("Helvetica", 20, fontDescriptor);
+				 label->SetFont(font);
+				 _loseWidget->GetContentView()->AddSubview(label);
+				 label->Release();
+				
+				_startWidget = new RN::UI::Widget(RN::UI::Widget::Style::Borderless, RN::Rect(0.0f, 0.0f, 512, 512));
+				 _startWidget->Center();
+				 label = new RN::UI::Label();
+				 label->SetNumberOfLines(5);
+				 label->SetText(RNSTR("You are a cleaning robot\ndo not let the\nwaste cross the river!\n\nPress space to start!"));
+				 label->SetFrame(_clockWidget->GetContentView()->GetBounds());
+				 label->SetAlignment(RN::UI::TextAlignment::Center);
+				 label->SetTextColor(RN::Color::Yellow());
+				 font = RN::UI::Font::WithNameAndDescriptor("Helvetica", 15, fontDescriptor);
+				 label->SetFont(font);
+				 _startWidget->GetContentView()->AddSubview(label);
+				 label->Release();
+			}
+			
+			_startWidget->Open();
+		});
 	}
 
 	void World::Update(float delta)
 	{
-		if(_camera->GetWorldPosition().y < _water->GetWorldPosition().y)
+		if(_isIntro)
+		{
+			RN::Vector3 position(100.0f, 20.0f, 0.0f);
+			RN::Quaternion rotation = RN::Quaternion(RN::Vector3(_time * 20.0f, 0.0f, 0.0f));
+			position = rotation.GetRotatedVector(position);
+			_camera->SetWorldPosition(position);
+			_camera->SetRotation(RN::Quaternion::WithLookAt(position));
+		}
+		
+		RN::Input *input = RN::Input::GetSharedInstance();
+		if(!_isRunning && input->IsKeyPressed(' ') && _dirtCounter == 0)
+		{
+			_isRunning = true;
+			_isIntro = false;
+			
+			RN::Kernel::GetSharedInstance()->ScheduleFunction([&](){
+				_startWidget->Close();
+				_clockWidget->Open();
+			});
+			
+			_time = 0.0f;
+			_camera->SetWorldPosition(_player->GetWorldPosition());
+		}
+		
+		if(_camera->GetWorldPosition().y < 0.0f)
 		{
 			_camera->SetFogFar(50.0f);
 			_waterCamera->SetFogFar(50.0f);
-			_camera->SetFogColor(RN::Color(0.5f, 0.5f, 0.6f) * 0.5f);
-			_waterCamera->SetFogColor(RN::Color(0.5f, 0.5f, 0.6f) * 0.5f);
+			_camera->SetFogNear(-20.0f);
+			_waterCamera->SetFogNear(-20.0f);
+			
+			float factor = _dirtCounter / 4.0f;
+			RN::Color fogcolor = RN::Color(0.25f, 0.25f, 0.3f) * (1.0f-factor) + RN::Color(0.25f, 0.0f, 0.0f) * factor;
+			
+			_camera->SetFogColor(fogcolor);
+			_waterCamera->SetFogColor(fogcolor);
 		}
 		else
 		{
@@ -164,8 +326,6 @@ namespace LD
 		
 		if(!_player)
 		{
-			RN::Input *input = RN::Input::GetSharedInstance();
-			
 			RN::Vector3 translation;
 			RN::Vector3 rotation;
 			
@@ -183,6 +343,37 @@ namespace LD
 			translation *= (input->GetModifierKeys() & RN::KeyModifier::KeyShift) ? 2.0f : 1.0f;
 			_camera->Rotate(rotation);
 			_camera->TranslateLocal(translation * delta);
+		}
+		
+		_time += delta;
+		
+		if(_dirtCounter < 4 && _isRunning)
+		{
+			RN::Kernel::GetSharedInstance()->ScheduleFunction([&](){
+				_clockLabel->SetText(RNSTR("Time: %4.2f", _time));
+			});
+		}
+	}
+	
+	void World::MakeDirty()
+	{
+		_dirtCounter += 1;
+		_dirtCounter = std::min(_dirtCounter, 4);
+		
+		if(_dirtCounter == 4)
+		{
+			_loseWidget->Open();
+			_isRunning = false;
+			
+			RN::Timer::ScheduledTimerWithDuration(std::chrono::milliseconds(5000), [&]() {
+				_loseWidget->Close();
+				_dirtCounter = 0;
+				RN::World::GetActiveWorld()->DropSceneNodes();
+				RN::World::GetActiveWorld()->LoadOnThread(RN::Thread::GetCurrentThread(), nullptr);
+				_startWidget->Open();
+				_clockWidget->Close();
+				_isIntro = true;
+			}, false);
 		}
 	}
 }

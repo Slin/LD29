@@ -7,13 +7,16 @@
 //
 
 #include "LDDirt.h"
+#include "LDWorld.h"
 
 namespace LD
 {
 	RNDefineMeta(Dirt, RN::Entity)
 	
 	Dirt::Dirt() :
-	_player(nullptr)
+	_player(nullptr),
+	_didCount(false),
+	_isIntro(false)
 	{
 		RN::Model *model = RN::Model::WithFile("Models/Dirt/Dirt.sgm");
 		SetModel(model);
@@ -21,6 +24,11 @@ namespace LD
 		
 		_body = new RN::bullet::RigidBody(RN::bullet::SphereShape::WithRadius(0.5f), 0.5f);
 		AddAttachment(_body);
+		
+		if(!static_cast<World*>(RN::World::GetActiveWorld())->IsRunning())
+		{
+			_isIntro = true;
+		}
 	}
 	
 	Dirt::~Dirt()
@@ -33,7 +41,14 @@ namespace LD
 	{
 		if(GetWorldPosition().y < 0.0f)
 		{
-			_body->ApplyImpulse(RN::Vector3(0.0f, 4.9f, 0.0f) * delta);
+			_body->SetDamping(0.2f, 0.1f);
+			_body->SetGravity(RN::Vector3(-1.0f, -0.3f, 0.0f));
+			
+			if(_isIntro)
+			{
+				RemoveFromWorld();
+				return;
+			}
 		}
 		
 		if(_player)
@@ -42,6 +57,12 @@ namespace LD
 			{
 				RemoveFromWorld();
 			}
+		}
+		
+		if(!_didCount && GetWorldPosition().x < -270.0f)
+		{
+			static_cast<World*>(RN::World::GetActiveWorld())->MakeDirty();
+			_didCount = true;
 		}
 	}
 	
