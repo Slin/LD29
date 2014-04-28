@@ -54,7 +54,7 @@ namespace LD
 			{
 				case '0':
 				{
-					RN::MessageCenter::GetSharedInstance()->PostMessage(RNCSTR("DPToggle"), nullptr, nullptr);
+				//	RN::MessageCenter::GetSharedInstance()->PostMessage(RNCSTR("DPToggle"), nullptr, nullptr);
 					break;
 				}
 					
@@ -296,7 +296,11 @@ namespace LD
 				label->SetTextColor(RN::Color::Yellow());
 				RN::UI::FontDescriptor fontDescriptor;
 				fontDescriptor.style = RN::UI::FontDescriptor::FontStyleBold;
+#if RN_PLATFORM_MAC_OS
 				RN::UI::Font *font = RN::UI::Font::WithNameAndDescriptor("Helvetica", 20, fontDescriptor);
+#else
+				RN::UI::Font *font = RN::UI::Font::WithNameAndDescriptor("Arial", 20, fontDescriptor);
+#endif
 				label->SetFont(font);
 				_loseWidget->GetContentView()->AddSubview(label);
 				_loseWidget->SetCanBecomeKeyWidget(false);
@@ -311,7 +315,11 @@ namespace LD
 				label->SetFrame(_clockWidget->GetContentView()->GetBounds());
 				label->SetAlignment(RN::UI::TextAlignment::Center);
 				label->SetTextColor(RN::Color::Yellow());
+#if RN_PLATFORM_MAC_OS
 				font = RN::UI::Font::WithNameAndDescriptor("Helvetica", 15, fontDescriptor);
+#else
+				font = RN::UI::Font::WithNameAndDescriptor("Arial", 15, fontDescriptor);
+#endif
 				label->SetFont(font);
 				_startWidget->GetContentView()->AddSubview(label);
 				_startWidget->SetCanBecomeKeyWidget(false);

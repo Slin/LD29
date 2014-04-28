@@ -1,5 +1,5 @@
 {
 	"RNUIStyle": "ui/rn_uistyle.json",
-	"RNModules": ["Modules/Downpour/libDownpour"],
+	"RNModules": [],
 	"RNApplication": "LD29"
 }
