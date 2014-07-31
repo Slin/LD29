@@ -32,16 +32,16 @@ namespace LD
 		if(_time <= 0.0f)
 		{
 			Dirt *dirt = new Dirt();
-			dirt->SetPosition(GetWorldPosition()+RN::Vector3(0.0f, 0.0f, _rng->RandomFloatRange(-60.0f, 10.0f)));
+			dirt->SetPosition(GetWorldPosition()+RN::Vector3(0.0f, 0.0f, _rng->GetRandomFloatRange(-60.0f, 10.0f)));
 			dirt->Throw(RN::Vector3(-5.0f, 10.0f, 0.0f));
 			if(_player)
 				dirt->SetPlayer(_player);
 			dirt->Release();
 			
 			if(!static_cast<World*>(RN::World::GetActiveWorld())->IsRunning())
-				_time = _rng->RandomFloatRange(0.5f, 1.0f);
+				_time = _rng->GetRandomFloatRange(0.5f, 1.0f);
 			else
-				_time = _rng->RandomFloatRange(2.0f, 5.0f);
+				_time = _rng->GetRandomFloatRange(2.0f, 5.0f);
 		}
 	}
 	

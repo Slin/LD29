@@ -43,8 +43,8 @@ namespace RN
 			void SetAngularVelocity(const Vector3 &velocity);
 			void SetCCDMotionThreshold(float threshold);
 			void SetCCDSweptSphereRadius(float radius);
-			void SetDamping(float linear, float angular);
 			void SetGravity(const Vector3 &gravity);
+			void SetDamping(float linear, float angular);
 			
 			void ApplyForce(const Vector3 &force);
 			void ApplyForce(const Vector3 &force, const Vector3 &origin);
@@ -55,11 +55,11 @@ namespace RN
 			void ApplyImpulse(const Vector3 &impulse);
 			void ApplyImpulse(const Vector3 &impulse, const Vector3 &origin);
 			
-			Vector3 GetLinearVelocity();
-			Vector3 GetAngularVelocity();
+			Vector3 GetLinearVelocity() const;
+			Vector3 GetAngularVelocity() const;
 			
-			void getWorldTransform(btTransform &worldTrans) const override;
-			void setWorldTransform(const btTransform &worldTrans) override;
+			Vector3 GetCenterOfMass() const;
+			Matrix GetCenterOfMassTransform() const;
 			
 			btCollisionObject *GetBulletCollisionObject() override { return _rigidBody; }
 			btRigidBody *GetBulletRigidBody() { return _rigidBody; }
@@ -72,6 +72,9 @@ namespace RN
 			void RemoveFromWorld(PhysicsWorld *world) override;
 			
 		private:
+			void getWorldTransform(btTransform &worldTrans) const override;
+			void setWorldTransform(const btTransform &worldTrans) override;
+		
 			Shape *_shape;
 			btRigidBody *_rigidBody;
 			

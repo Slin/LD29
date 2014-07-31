@@ -50,6 +50,11 @@ namespace LD
 	{
 		if(event->GetType() == RN::Event::Type::KeyDown)
 		{
+			if(event->GetCode() == RN::KeyCodes::KeyESC)
+			{
+				RN::Kernel::GetSharedInstance()->Exit();
+			}
+			
 			switch(event->GetCharacter())
 			{
 				case '0':
@@ -93,12 +98,12 @@ namespace LD
 		
 		RN::Material *refractCopy = new RN::Material(RN::Shader::WithFile("shader/rn_PPCopy"));
 		refractCopy->Define("RN_COPYDEPTH");
-		_refractCamera = new RN::Camera(_camera->GetFrame().Size(), RN::Texture::Format::RGBA32F, RN::Camera::Flags::UpdateStorageFrame, RN::RenderStorage::BufferFormatColor);
+		_refractCamera = new RN::Camera(_camera->GetFrame().GetSize(), RN::Texture::Format::RGBA32F, RN::Camera::Flags::UpdateStorageFrame, RN::RenderStorage::BufferFormatColor);
 		_refractCamera->SetMaterial(refractCopy);
 		_refractCamera->SceneNode::SetFlags(_camera->SceneNode::GetFlags() | RN::SceneNode::Flags::NoSave);
 		waterPipeline->AddStage(_refractCamera, RN::RenderStage::Mode::ReUsePreviousStage);
 		
-		_waterCamera = new RN::Camera(RN::Vector2(_camera->GetFrame().Size()), storage, RN::Camera::Flags::Defaults);
+		_waterCamera = new RN::Camera(RN::Vector2(_camera->GetFrame().GetSize()), storage, RN::Camera::Flags::Defaults);
 		_waterCamera->SetClearMask(0);
 		_waterCamera->SetRenderGroups(RN::Camera::RenderGroups::Group2);
 		_waterCamera->SetDebugName("Water");
@@ -200,7 +205,7 @@ namespace LD
 		
 		for(int i = 0; i < 500; i++)
 		{
-			RN::Vector3 pos(random.RandomFloatRange(-300.0f, -500.0f), 10.0f, random.RandomFloatRange(-500.0f, 300.0f));
+			RN::Vector3 pos(random.GetRandomFloatRange(-300.0f, -500.0f), 10.0f, random.GetRandomFloatRange(-500.0f, 300.0f));
 			
 			RN::Hit hit = _physicsWorld->CastRay(pos, RN::Vector3(pos.x, -500.0f, pos.z));
 			if(hit.distance <= 0.0f || hit.position.y < 0.0f)
@@ -210,7 +215,7 @@ namespace LD
 			
 			RN::Entity *entity = new RN::Entity(RN::Model::WithFile("Models/Tree/Tree.sgm"), pos);
 			entity->SetFlags(entity->GetFlags() | RN::SceneNode::Flags::Static | RN::SceneNode::Flags::NoSave);
-			entity->SetScale(RN::Vector3(random.RandomFloatRange(0.89f, 1.12f)));
+			entity->SetScale(RN::Vector3(random.GetRandomFloatRange(0.89f, 1.12f)));
 			treeNode->AddChild(entity);
 			entity->Release();
 		}
@@ -223,7 +228,7 @@ namespace LD
 		
 		for(int i = 0; i < 500; i++)
 		{
-			RN::Vector3 pos(random.RandomFloatRange(0.0f, 500.0f), 2.0f, random.RandomFloatRange(-500.0f, 500.0f));
+			RN::Vector3 pos(random.GetRandomFloatRange(0.0f, 500.0f), 2.0f, random.GetRandomFloatRange(-500.0f, 500.0f));
 			
 			if(pos.GetLength() < 200.0f)
 				continue;
@@ -247,7 +252,7 @@ namespace LD
 		
 		for(int i = 0; i < 1000; i++)
 		{
-			RN::Vector3 pos(random.RandomFloatRange(-100.0f, -250.0f), 2.0f, random.RandomFloatRange(-500.0f, 500.0f));
+			RN::Vector3 pos(random.GetRandomFloatRange(-100.0f, -250.0f), 2.0f, random.GetRandomFloatRange(-500.0f, 500.0f));
 			
 			RN::Hit hit = _physicsWorld->CastRay(pos, RN::Vector3(pos.x, -500.0f, pos.z));
 			if(hit.distance <= 10.0f)
@@ -255,10 +260,10 @@ namespace LD
 			
 			pos = hit.position;
 			
-			RN::Entity *entity = new RN::Entity(algaeModels[random.RandomInt32Range(0, 2)], pos);
+			RN::Entity *entity = new RN::Entity(algaeModels[random.GetRandomInt32Range(0, 2)], pos);
 			entity->SetFlags(entity->GetFlags() | RN::SceneNode::Flags::Static | RN::SceneNode::Flags::NoSave);
-			entity->SetScale(RN::Vector3(random.RandomFloatRange(0.89f, 1.12f)));
-			entity->SetRotation(RN::Vector3(random.RandomFloatRange(0.0f, 360.0f), 0.0f, 0.0f));
+			entity->SetScale(RN::Vector3(random.GetRandomFloatRange(0.89f, 1.12f)));
+			entity->SetRotation(RN::Vector3(random.GetRandomFloatRange(0.0f, 360.0f), 0.0f, 0.0f));
 			algaeNode->AddChild(entity);
 			entity->Release();
 		}
@@ -282,7 +287,7 @@ namespace LD
 				_clockLabel = new RN::UI::Label();
 				_clockLabel->SetAutoresizingMask(RN::UI::View::AutoresizingMask::FlexibleHeight | RN::UI::View::AutoresizingMask::FlexibleWidth);
 				_clockLabel->SetNumberOfLines(1);
-				_clockLabel->SetFrame(RN::Rect(0.0f, 0.0f, _clockWidget->GetFrame().Size().x, _clockWidget->GetFrame().Size().y).Inset(5.0f, 5.0f));
+				_clockLabel->SetFrame(RN::Rect(0.0f, 0.0f, _clockWidget->GetFrame().GetSize().x, _clockWidget->GetFrame().GetSize().y).Inset(5.0f, 5.0f));
 				_clockWidget->GetContentView()->AddSubview(_clockLabel);
 				_clockWidget->SetCanBecomeKeyWidget(false);
 				_clockWidget->SetWidgetLevel(-10000);
@@ -293,7 +298,7 @@ namespace LD
 				label->SetText(RNSTR("The factory won!"));
 				label->SetFrame(_clockWidget->GetContentView()->GetBounds());
 				label->SetAlignment(RN::UI::TextAlignment::Center);
-				label->SetTextColor(RN::Color::Yellow());
+				label->SetTextColor(RN::UI::Color::WithRNColor(RN::Color::Yellow()));
 				RN::UI::FontDescriptor fontDescriptor;
 				fontDescriptor.style = RN::UI::FontDescriptor::FontStyleBold;
 #if RN_PLATFORM_MAC_OS
@@ -314,7 +319,7 @@ namespace LD
 				label->SetText(RNSTR("You are a cleaning robot\ndo not let the\nwaste cross the river!\n\nPress space to start!"));
 				label->SetFrame(_clockWidget->GetContentView()->GetBounds());
 				label->SetAlignment(RN::UI::TextAlignment::Center);
-				label->SetTextColor(RN::Color::Yellow());
+				label->SetTextColor(RN::UI::Color::WithRNColor(RN::Color::Yellow()));
 #if RN_PLATFORM_MAC_OS
 				font = RN::UI::Font::WithNameAndDescriptor("Helvetica", 15, fontDescriptor);
 #else

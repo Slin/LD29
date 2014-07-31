@@ -29,7 +29,7 @@
 		D52BC053190B36990016BD65 /* LD29-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "LD29-Info.plist"; path = "Supporting files/LD29-Info.plist"; sourceTree = "<group>"; };
 		D52BC054190B36990016BD65 /* LD29-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "LD29-Prefix.pch"; path = "Supporting files/LD29-Prefix.pch"; sourceTree = "<group>"; };
 		D52BC057190B36990016BD65 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		D52BC058190B36990016BD65 /* settings.json */ = {isa = PBXFileReference; lastKnownFileType = folder; name = settings.json; sourceTree = "<group>"; };
+		D52BC058190B36990016BD65 /* settings.json */ = {isa = PBXFileReference; lastKnownFileType = folder; path = settings.json; sourceTree = "<group>"; };
 		D52BC063190BD45B0016BD65 /* LDPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LDPlayer.cpp; path = Classes/LDPlayer.cpp; sourceTree = "<group>"; };
 		D52BC064190BD45B0016BD65 /* LDPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LDPlayer.h; path = Classes/LDPlayer.h; sourceTree = "<group>"; };
 		D52BC067190C6B5E0016BD65 /* LDDirt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LDDirt.cpp; path = Classes/LDDirt.cpp; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = LD;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Überpixel";
 			};
 			buildConfigurationList = D52BC040190B36990016BD65 /* Build configuration list for PBXProject "LD29" */;
@@ -279,6 +279,7 @@
 		D52BC05C190B36990016BD65 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LD29/Supporting files/LD29-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -305,6 +306,7 @@
 		D52BC05D190B36990016BD65 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LD29/Supporting files/LD29-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
